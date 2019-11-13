@@ -1,14 +1,16 @@
 package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.PmsProductCategory;
+import com.alone.mymall.pojo.PmsProductCategoryParam;
+import com.alone.mymall.pojo.PmsProductCategoryWithChildrenItem;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface PmsProductCategoryService {
     List<PmsProductCategory> listAllProductCategory();
-    int createProductCategory(PmsProductCategory pmsProductCategory);
-    int updateProductCategory(Long id,PmsProductCategory pmsProductCategory);
+    int createProductCategory(PmsProductCategoryParam pmsProductCategoryParam);
+    int updateProductCategory(Long id,PmsProductCategoryParam pmsProductCategoryParam);
     int deleteProductCategory(Long id);
     int deleteProductCategory(List<Long> ids);
     List<PmsProductCategory> getList(Long parentId,Integer pageNum,Integer PageSize);
