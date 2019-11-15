@@ -7,6 +7,7 @@ import com.alone.mymall.mgb.model.PmsBrandExample;
 import com.alone.mymall.mgb.model.PmsProductCategory;
 import com.alone.mymall.pojo.PmsProductCategoryWithChildrenItem;
 import com.alone.mymall.service.PmsBrandService;
+import com.alone.mymall.service.PmsProductCategoryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,7 +29,8 @@ class MymallApplicationTests {
 
     @Autowired
     private PmsProductCategoryDao pmsProductCategoryDao;
-
+    @Autowired
+    private PmsProductCategoryService pmsProductCategoryService;
 
 
 
@@ -40,6 +42,12 @@ class MymallApplicationTests {
     public void PmsProductCategoryDaoTest(){
         List<PmsProductCategoryWithChildrenItem> pmsProductCategoryWithChildrenItem= pmsProductCategoryDao.listWithChildren();
         System.out.println(pmsProductCategoryWithChildrenItem.toString());
+    }
+
+    @Test
+    public void PmsProductCategoryServiceTest(){
+        List<PmsProductCategoryWithChildrenItem> list= pmsProductCategoryService.listWithChildren();
+        System.out.println(list);
     }
 
 
