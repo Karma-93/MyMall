@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 商品分类管理
+ */
 public interface PmsProductCategoryService {
     List<PmsProductCategory> listAllProductCategory();
     int createProductCategory(PmsProductCategoryParam pmsProductCategoryParam);

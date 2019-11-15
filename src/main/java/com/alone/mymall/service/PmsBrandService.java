@@ -4,6 +4,9 @@ import com.alone.mymall.mgb.model.PmsBrand;
 
 import java.util.List;
 
+/**
+ * 商品品牌管理
+ */
 public interface PmsBrandService {
     List<PmsBrand> listAllBrand();
     int createBrand(PmsBrand brand);

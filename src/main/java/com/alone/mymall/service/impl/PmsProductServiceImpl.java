@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 商品列表service
+ */
 @Service
 public class PmsProductServiceImpl implements PmsProductService {
 
