@@ -10,17 +10,17 @@ import java.util.List;
 public interface PmsProductAttributeCategoryService {
 
     /**
-     * 添加上平属性分类
-     * @param pmsProductAttributeCategory
+     * 添加商品属性分类(根据名称)
+     * @param
      * @return
      */
-    int create(PmsProductAttributeCategory pmsProductAttributeCategory);
+    int create(String name);
 
     /**
      * 分页查询所有商品属性分类
      * @return
      */
-    List<PmsProductAttributeCategory> list();
+    List<PmsProductAttributeCategory> list(Integer pageNum,Integer pageSize);
 
     /**
      * 删除单个商品属性分类
@@ -30,16 +30,24 @@ public interface PmsProductAttributeCategoryService {
     int delete(Long id);
 
     /**
-     * 修改、更新单个商品属性分类
-     * @param pmsProductAttributeCategory
+     *
+     * 批量删除商品属性分类
+     * @param id
      * @return
      */
-    int update(PmsProductAttributeCategory pmsProductAttributeCategory);
+    int deleteBatch(List<Long> id);
+
+    /**
+     * 修改、更新单个商品属性分类
+     * @param
+     * @return
+     */
+    int update(Long id,String name);
 
     /**
      * 查询单个属性分类信息
      * @param id
      * @return
      */
-    PmsProductAttributeCategory getProductAttributeCategory(Long id);
+    PmsProductAttributeCategory getItem(Long id);
 }

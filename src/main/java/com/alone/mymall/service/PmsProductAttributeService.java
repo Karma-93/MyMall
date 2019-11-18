@@ -18,11 +18,20 @@ public interface PmsProductAttributeService {
     int create(PmsProductAttribute pmsProductAttribute);
 
     /**
-     * 根据分类查询属性列表或者参数列表（分页，）
+     * 根据分类查询属性列表或者参数列表（分页，支持类型）
+     * @param cid 分类id
+     * @param type 0->属性 2->参数
+     * @param pageSize
+     * @param pageNum
      * @return
      */
-    List<PmsProductAttribute> list();
+    List<PmsProductAttribute> getList(Long cid,Integer type,Integer pageSize,Integer pageNum);
 
+    /**
+     * 查询所有商品属性，分页
+     * @return
+     */
+    List<PmsProductAttribute> listAll(Integer pageSize,Integer pageNum);
     /**
      * 查询单个商品属性
      * @param id
