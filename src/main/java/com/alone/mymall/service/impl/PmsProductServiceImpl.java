@@ -15,7 +15,11 @@ import org.springframework.util.CollectionUtils;
 
 import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 /**
  * 商品列表service
@@ -24,7 +28,9 @@ import java.util.List;
 public class PmsProductServiceImpl implements PmsProductService {
 
     @Autowired
-    private PmsProductMapper pmsProductMapper;
+    private PmsProductMapper productMapper;
+
+
 
     @Override
     public int create(PmsProductParam pmsProductParam) {
@@ -32,12 +38,12 @@ public class PmsProductServiceImpl implements PmsProductService {
         //创建商品
         PmsProduct pmsProduct=pmsProductParam;
         pmsProduct.setId(null);
-        pmsProductMapper.insertSelective(pmsProduct);
+        productMapper.insertSelective(pmsProduct);
         //根据促销类型设置价格：/阶梯价格、满减价格
         Long productId=pmsProduct.getId();
         //会员价格
 
-        return count;
+        return 0;
     }
 
     @Override
@@ -50,7 +56,7 @@ public class PmsProductServiceImpl implements PmsProductService {
         PmsProduct pmsProduct=new PmsProduct();
         pmsProduct.setId(id);
         BeanUtils.copyProperties(pmsProductParam,pmsProduct);
-        return pmsProductMapper.updateByPrimaryKeySelective(pmsProduct);
+        return productMapper.updateByPrimaryKeySelective(pmsProduct);
     }
 
     @Override
@@ -107,10 +113,16 @@ public class PmsProductServiceImpl implements PmsProductService {
             for(Object item:dataList){
                 Method setId=item.getClass().getMethod("setId",Long.class);
                 setId.invoke(item,(Long)null);
-
+                Method setProductId=item.getClass().getMethod("setProductId",Long.class);
+                setProductId.invoke(item,productId);
             }
+            Method insertList=dao.getClass().getMethod("insertList",List.class);
+            insertList.invoke(dao,dataList);
         }catch (Exception e){
-
+            throw new RuntimeException(e.getMessage());
         }
+
     }
 }
+
+
