@@ -75,7 +75,7 @@ public interface PmsProductService {
      * 批量删除商品
      * @return
      */
-    int updateDeleteStatus(List<Long> ids);
+    int updateDeleteStatus(List<Long> ids,Integer deletestatus);
 
     /**
      * 根据商品名称或货号模糊查询
