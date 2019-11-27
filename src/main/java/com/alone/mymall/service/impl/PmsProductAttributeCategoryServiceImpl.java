@@ -1,9 +1,11 @@
 package com.alone.mymall.service.impl;
 
+import com.alone.mymall.dao.PmsProductAttributeCategoryDao;
 import com.alone.mymall.mgb.mapper.PmsProductAttributeCategoryMapper;
 import com.alone.mymall.mgb.model.PmsProductAttribute;
 import com.alone.mymall.mgb.model.PmsProductAttributeCategory;
 import com.alone.mymall.mgb.model.PmsProductAttributeCategoryExample;
+import com.alone.mymall.pojo.PmsProductAttributeCategoryItem;
 import com.alone.mymall.service.PmsProductAttributeCategoryService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
 
     @Autowired
     private PmsProductAttributeCategoryMapper pmsProductAttributeCategoryMapper;
+    @Autowired
+    private PmsProductAttributeCategoryDao productAttributeCategoryDao;
+
     @Override
     public int create(String name) {
         PmsProductAttributeCategory pmsProductAttributeCategory=new PmsProductAttributeCategory();
@@ -56,5 +61,10 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
     @Override
     public PmsProductAttributeCategory getItem(Long id) {
         return pmsProductAttributeCategoryMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<PmsProductAttributeCategoryItem> getListWithAttr() {
+        return productAttributeCategoryDao.getListWithAttr();
     }
 }

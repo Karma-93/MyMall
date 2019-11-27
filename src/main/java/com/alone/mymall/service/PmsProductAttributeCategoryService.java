@@ -1,6 +1,7 @@
 package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.PmsProductAttributeCategory;
+import com.alone.mymall.pojo.PmsProductAttributeCategoryItem;
 
 import java.util.List;
 
@@ -50,4 +51,6 @@ public interface PmsProductAttributeCategoryService {
      * @return
      */
     PmsProductAttributeCategory getItem(Long id);
+
+    List<PmsProductAttributeCategoryItem> getListWithAttr();
 }
