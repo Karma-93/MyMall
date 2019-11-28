@@ -2,6 +2,8 @@ package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.PmsProduct;
 import com.alone.mymall.mgb.model.PmsProductAttribute;
+import com.alone.mymall.pojo.PmsProductAttrInfo;
+import com.alone.mymall.pojo.PmsProductAttributeParam;
 
 import java.util.List;
 
@@ -12,10 +14,10 @@ public interface PmsProductAttributeService {
 
     /**
      * 创建商品属性
-     * @param pmsProductAttribute
+     * @param
      * @return
      */
-    int create(PmsProductAttribute pmsProductAttribute);
+    int create(PmsProductAttributeParam ProductAttributeParam);
 
     /**
      * 根据分类查询属性列表或者参数列表（分页，支持类型）
@@ -25,7 +27,7 @@ public interface PmsProductAttributeService {
      * @param pageNum
      * @return
      */
-    List<PmsProductAttribute> getList(Long cid,Integer type,Integer pageSize,Integer pageNum);
+    List<PmsProductAttribute> getList(Long cid,Integer type,Integer pageNum,Integer pageSize);
 
     /**
      * 查询所有商品属性，分页
@@ -48,8 +50,10 @@ public interface PmsProductAttributeService {
 
     /**
      * 更新商品属性
-     * @param pmsProductAttribute
+     * @param
      * @return
      */
-    int update(PmsProductAttribute pmsProductAttribute);
+    int update(Long id,PmsProductAttributeParam productAttributeParam);
+
+    List<PmsProductAttrInfo> getProductAttrInfo(Long productCategoryId);
 }
