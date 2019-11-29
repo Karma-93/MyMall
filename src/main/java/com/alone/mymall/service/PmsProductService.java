@@ -69,7 +69,7 @@ public interface PmsProductService {
      * 批量修改新品状态
      * @return
      */
-    int upddateNewStatus(List<Long> ids,Integer newstatus);
+    int updateNewStatus(List<Long> ids,Integer newstatus);
 
     /**
      * 批量删除商品

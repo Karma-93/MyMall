@@ -211,7 +211,7 @@ public class PmsProductServiceImpl implements PmsProductService {
     }
 
     @Override
-    public int upddateNewStatus(List<Long> ids, Integer newstatus) {
+    public int updateNewStatus(List<Long> ids, Integer newstatus) {
         PmsProduct product=new PmsProduct();
         product.setNewStatus(newstatus);
         PmsProductExample productExample=new PmsProductExample();
