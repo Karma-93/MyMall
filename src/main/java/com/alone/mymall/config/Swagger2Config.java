@@ -16,8 +16,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import sun.misc.Request;
 
 @Configuration
-@EnableSwagger2
+@EnableSwagger2//开启Swagger2
 public class Swagger2Config {
+    /**创建API应用
+     *Docket是api扫描的结构规则制定对象 
+     */
     @Bean
     public Docket createResultApi(){
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
@@ -29,9 +32,9 @@ public class Swagger2Config {
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any()).build();
     }
-
+    //对swagger首页的信息说明对象
     private ApiInfo apiInfo()
     {
-        return new ApiInfoBuilder().title("SwaggerUI演示").description("mall-tiny").contact("macro").version("1.0").build();
+        return new ApiInfoBuilder().title("SwaggerUI演示").description("MyMall").version("1.0").build();
     }
 }

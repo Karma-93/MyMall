@@ -12,12 +12,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 
 
 /**
  * 商品分类管理
  */
+@Api(value = "商品分类管理" ,description = "商品分类管理")
 @Controller
 @RequestMapping("/productCatetory")
 public class PmsProductCategoryController {
@@ -31,6 +35,7 @@ public class PmsProductCategoryController {
      * @param pmsProductCategoryParam
      * @return
      */
+    @ApiOperation("添加商品分类")
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public CommonResult create(@RequestBody PmsProductCategoryParam pmsProductCategoryParam){
@@ -48,6 +53,7 @@ public class PmsProductCategoryController {
      * @param id
      * @return
      */
+    @ApiOperation("更新商品分类信息")
     @ResponseBody
     @RequestMapping(value ="/update",method = RequestMethod.POST)
     public CommonResult update(@RequestBody PmsProductCategoryParam pmsProductCategoryParam,Long id){
@@ -66,12 +72,14 @@ public class PmsProductCategoryController {
      * @param id
      * @return
      */
+    @ApiOperation("查询单个分类")
     @ResponseBody
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public CommonResult productCategory(@PathVariable Long id){
         return CommonResult.success(productCategoryService.getItem(id));
     }
 
+    @ApiOperation("分页查询商品分类")
     @ResponseBody
     @RequestMapping(value = "/list/{parentId}")
     public CommonResult<CommonPage<PmsProductCategory>> getList(@PathVariable Long parentId,
@@ -86,6 +94,7 @@ public class PmsProductCategoryController {
      * @param id
      * @return
      */
+    @ApiOperation("删除单个商品分类")
     @ResponseBody
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public CommonResult delete(@PathVariable Long id){
@@ -102,6 +111,7 @@ public class PmsProductCategoryController {
      * 批量删除商品分类
      * @return
      */
+    @ApiOperation("批量删除商品分类")
     @ResponseBody
     @RequestMapping(value = "/delete/batch" ,method = RequestMethod.GET)
     public CommonResult deleteBatch(@RequestParam List<Long> ids){
@@ -113,6 +123,7 @@ public class PmsProductCategoryController {
         }
     }
 
+    @ApiOperation("修改导航栏显示状态")
     @ResponseBody
     @RequestMapping(value = "/update/navstatus",method = RequestMethod.POST)
     public CommonResult updateNavStatus(@RequestParam("ids") List<Long> ids,
@@ -126,6 +137,8 @@ public class PmsProductCategoryController {
 
     }
 
+
+    @ApiOperation("更新商品分类显示状态")
     @ResponseBody
     @RequestMapping(value = "/update/showstatus",method = RequestMethod.POST)
     public CommonResult updateShowStatus(@RequestParam("ids") List<Long> ids,
@@ -142,6 +155,7 @@ public class PmsProductCategoryController {
      * 查询所有一级子类及分类
      * @return
      */
+    @ApiOperation("查询所有一级子类分类")
     @ResponseBody
     @RequestMapping("/list/withChildren")
     public CommonResult<List<PmsProductCategoryWithChildrenItem>> listWithChildren() {

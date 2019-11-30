@@ -11,7 +11,8 @@
   Spring Boot框架  
   MySql数据库  
   PageHelper分页插件  
-  Lombook
+  Lombook  
+  Swagger-UI生成在线API
   
 ### **后台功能** ###
 #### 商品管理: ####

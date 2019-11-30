@@ -10,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 
+@Api(tags = "PmsproductAttributeCategoryService",description = "商品属性分类管理")
 @Controller
 @RequestMapping("/productAttribute/category")
 public class PmsProductAttributeCategoryController {
@@ -19,6 +23,7 @@ public class PmsProductAttributeCategoryController {
     @Autowired
     private PmsProductAttributeCategoryService productAttributeCategoryService;
 
+    @ApiOperation("添加商品属性分类")
     //添加商品属性分类
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
@@ -33,6 +38,7 @@ public class PmsProductAttributeCategoryController {
 
 
     //修改商品属性分类
+    @ApiOperation("修改商品属性分类")
     @ResponseBody
     @RequestMapping(value = "/update/{id}",method = RequestMethod.POST)
     public CommonResult update(@PathVariable Long id, @RequestParam String name){
@@ -45,6 +51,7 @@ public class PmsProductAttributeCategoryController {
     }
 
     //删除单个商品属性分类
+    @ApiOperation("删除单个商品属性分类")
     @ResponseBody
     @RequestMapping(value = "/delete/id",method =RequestMethod.GET)
     public CommonResult delete( @PathVariable Long id){
@@ -56,6 +63,7 @@ public class PmsProductAttributeCategoryController {
         }
     }
 
+    @ApiOperation("获取单个商品属性分类")
     //获取单个商品属性分类
     @ResponseBody
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
@@ -66,6 +74,7 @@ public class PmsProductAttributeCategoryController {
     }
 
     //分页查询所有商品属性分类
+    @ApiOperation("分页查询所有商品属性分类")
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public CommonResult getList(@RequestParam(defaultValue = "5") Integer pageSize,@RequestParam(defaultValue = "1") Integer pageNum){
@@ -74,6 +83,7 @@ public class PmsProductAttributeCategoryController {
     }
 
     //获取所有商品属性分类及其下属属性
+    @ApiOperation("获取所有商品属性分类及其下属属性")
     @RequestMapping(value = "/list/withAttr", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<PmsProductAttributeCategoryItem>> getListWithAttr() {
