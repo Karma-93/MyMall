@@ -12,7 +12,9 @@
   MySql数据库  
   PageHelper分页插件  
   Lombook  
-  Swagger-UI生成在线API
+  Swagger-UI生成在线API  
+  SpringSecurity
+  JWT(JSON WEB TOKEN)
   
 ### **后台功能** ###
 #### 商品管理: ####
@@ -21,4 +23,5 @@
 - 商品属性分类管理  
 - 商品属性管理  
 - 添加商品  
-- 修改商品
+- 修改商品  
+#### 用户管理 ####

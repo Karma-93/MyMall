@@ -3,6 +3,7 @@ package com.alone.mymall.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.alone.mymall.common.utils.JwtTokenUtil;
 import com.alone.mymall.mgb.mapper.UmsAdminMapper;
 import com.alone.mymall.mgb.model.UmsAdmin;
 import com.alone.mymall.mgb.model.UmsAdminExample;
@@ -22,7 +23,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UmsAdminMapper adminMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     public UmsAdmin getAdminByUsername(String username) {
@@ -56,7 +58,15 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public String longin(String username, String password) {
-        // TODO Auto-generated method stub
+        UmsAdminExample umsAdminExample=new UmsAdminExample();
+        umsAdminExample.createCriteria().andUsernameEqualTo(username);
+        List<UmsAdmin> list=adminMapper.selectByExample(umsAdminExample);
+        if(list==null  ||list.size()==0){
+            return null;
+        }
+        UmsAdmin umsAdmin=list.get(0);
+        umsAdmin.getPassword();
+
         return null;
     }
 
