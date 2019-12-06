@@ -1,26 +1,32 @@
 package com.alone.mymall.config;
 
-import java.util.List;
 
+import com.alone.mymall.component.JwtAuthenticationTokenFilter;
 import com.alone.mymall.component.RestAuthenticationEntryPoint;
 import com.alone.mymall.component.RestfulAccessDeniedHandler;
 import com.alone.mymall.mgb.model.UmsAdmin;
+import com.alone.mymall.mgb.model.UmsPermission;
+import com.alone.mymall.pojo.AdminUserDetails;
 import com.alone.mymall.service.UmsAdminService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.Filter;
+import java.util.List;
 
 /**
  * SpringSucrityConfig配置
@@ -28,20 +34,20 @@ import org.springframework.web.client.HttpServerErrorException;
 @Configurable
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SucrityConfig extends WebSecurityConfigurerAdapter{
+public class SucrityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UmsAdminService umsAdminService;
+    private UmsAdminService adminService;
     @Autowired
-    private RestAuthenticationEntryPoint RestAuthenticationEntryPoint;
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
-    private RestfulAccessDeniedHandler RestAuthenticationEntryPoint;
+    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     /**
      * 重写configurable 
      * 该方法设置了不同的url不同的访问权限、jwt的过滤器及出异常后的处理器
      * @param httpSecurity
      */
     @Override
-    protected void configurable(HttpSecurity httpSecurity){
+    protected void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf()
         .disable()
         .sessionManagement()//基于token，所以不需要session
@@ -73,7 +79,7 @@ public class SucrityConfig extends WebSecurityConfigurerAdapter{
         //添加JWT的Filter
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录的返回结果
-        httpSecurity.exceptionHandling().accessDeniedHandler(restfulAssessDeiedhandler)//restFulAccessDeiedhandler用户没有访问权限时的处理器，用于返回处理过的JSON
+        httpSecurity.exceptionHandling().accessDeniedHandler(restfulAccessDeniedHandler)//restFulAccessDeiedhandler用户没有访问权限时的处理器，用于返回处理过的JSON
                                         .authenticationEntryPoint
                                         (restAuthenticationEntryPoint);//restAuthenticationEntryPoint当未登录或token过期时，返回JSON格式的结果
     }
@@ -110,7 +116,7 @@ public class SucrityConfig extends WebSecurityConfigurerAdapter{
         };
     }
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+    public Filter jwtAuthenticationTokenFilter(){
         return new JwtAuthenticationTokenFilter();
     }
 
