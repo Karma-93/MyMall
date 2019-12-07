@@ -1,5 +1,6 @@
 package com.alone.mymall.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,14 +11,18 @@ import cn.hutool.core.date.DateTime;
 import com.alone.mymall.common.utils.JwtTokenUtil;
 import com.alone.mymall.mgb.mapper.UmsAdminLoginLogMapper;
 import com.alone.mymall.mgb.mapper.UmsAdminMapper;
+import com.alone.mymall.mgb.mapper.UmsAdminRoleRelationMapper;
 import com.alone.mymall.mgb.model.*;
 import com.alone.mymall.pojo.UmsAdminLoginParam;
 import com.alone.mymall.pojo.UmsAdminParam;
 import com.alone.mymall.pojo.UpdateAdminPasswordParam;
 import com.alone.mymall.service.UmsAdminService;
 
+import com.github.pagehelper.PageHelper;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +30,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -37,11 +43,15 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
     private UmsAdminLoginLogMapper adminLoginLogMapper;
     @Autowired
+    private UmsAdminRoleRelationMapper adminRoleRelationMapper;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
 
     @Override
     public UmsAdmin getAdminByUsername(String username) {
@@ -125,37 +135,61 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public String refreshToken(String oldToken) {
-        // TODO Auto-generated method stub
+        String token=oldToken.substring(tokenHead.length());
+        if(jwtTokenUtil.canRefresh(token)){
+            return jwtTokenUtil.refreshToken(token);
+        }
         return null;
     }
 
     @Override
     public UmsAdmin getItem(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return adminMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public List<UmsAdmin> list(String name, Integer pageNum, Integer pageSize) {
-        // TODO Auto-generated method stub
-        return null;
+        PageHelper.startPage(pageNum,pageSize);
+        UmsAdminExample umsAdminExample=new UmsAdminExample();
+        UmsAdminExample.Criteria criteria=umsAdminExample.createCriteria();
+        if (!StringUtils.isEmpty(name)){
+            criteria.andUsernameEqualTo("%"+name+"%");
+            umsAdminExample.or(umsAdminExample.createCriteria().andUsernameLike("%"+name+"%"));
+        }
+        return adminMapper.selectByExample(umsAdminExample);
     }
 
     @Override
     public int update(Long id, UmsAdmin admin) {
-        // TODO Auto-generated method stub
-        return 0;
+        admin.setId(id);
+        //密码已经加密处理，需要大度修改
+        admin.setPassword(null);
+        return adminMapper.updateByPrimaryKey(admin);
     }
 
     @Override
     public int delete(Long id) {
-        // TODO Auto-generated method stub
-        return 0;
+        return adminMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public int updateRole(Long adminId, List<Long> roleIds) {
-        // TODO Auto-generated method stub
+        int count=roleIds==null?0:roleIds.size();
+        //先删除原来的关系
+        UmsAdminRoleRelationExample adminRoleRelationExample=new UmsAdminRoleRelationExample();
+        adminRoleRelationExample.createCriteria().andAdminIdEqualTo(adminId);
+        adminRoleRelationMapper.deleteByExample(adminRoleRelationExample);
+        //建立新关系
+        if(!Collections.isEmpty(roleIds)){
+            List<UmsAdminRoleRelation> list=new ArrayList<>();
+            for (Long roleId:roleIds){
+                UmsAdminRoleRelation roleRelation=new UmsAdminRoleRelation();
+                roleRelation.setAdminId(adminId);
+                roleRelation.setRoleId(roleId);
+                list.add(roleRelation);
+            }
+        }
+
         return 0;
     }
 
