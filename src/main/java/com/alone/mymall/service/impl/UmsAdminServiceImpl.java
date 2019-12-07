@@ -3,15 +3,17 @@ package com.alone.mymall.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.util.StrUtil;
 import com.alone.mymall.common.utils.JwtTokenUtil;
-import com.alone.mymall.mgb.mapper.UmsAdminLoginLogMapper;
-import com.alone.mymall.mgb.mapper.UmsAdminMapper;
-import com.alone.mymall.mgb.mapper.UmsAdminRoleRelationMapper;
+import com.alone.mymall.dao.UmsAdminRoleRelationDao;
+import com.alone.mymall.mgb.mapper.*;
 import com.alone.mymall.mgb.model.*;
 import com.alone.mymall.pojo.UmsAdminLoginParam;
 import com.alone.mymall.pojo.UmsAdminParam;
@@ -30,6 +32,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -44,6 +47,10 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UmsAdminLoginLogMapper adminLoginLogMapper;
     @Autowired
     private UmsAdminRoleRelationMapper adminRoleRelationMapper;
+    @Autowired
+    private UmsAdminRoleRelationDao adminRoleRelationDao;
+    @Autowired
+    private UmsAdminPermissionRelationMapper adminPermissionRelationMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -188,33 +195,81 @@ public class UmsAdminServiceImpl implements UmsAdminService {
                 roleRelation.setRoleId(roleId);
                 list.add(roleRelation);
             }
+            adminRoleRelationDao.isnertList(list);
         }
-
         return 0;
     }
 
     @Override
     public List<UmsRole> getRoleList(Long adminId) {
-        // TODO Auto-generated method stub
-        return null;
+        return adminRoleRelationDao.getRoleList(adminId);
     }
 
     @Override
     public int updatePermission(Long adminId, List<Long> permissionIds) {
-        // TODO Auto-generated method stub
+        //删除原有权限关系
+        UmsAdminPermissionRelationExample umsAdminPermissionRelationExample=new UmsAdminPermissionRelationExample();
+        umsAdminPermissionRelationExample.createCriteria().andAdminIdEqualTo(adminId);
+        adminPermissionRelationMapper.deleteByExample(umsAdminPermissionRelationExample);
+        //获取用户所有角色权限
+        List<UmsPermission> permissionList=adminRoleRelationDao.getRolePermissionList(adminId);
+        List<Long> rolePermissionList=permissionList.stream().map(UmsPermission::getId).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(permissionIds)) {
+            List<UmsAdminPermissionRelation> relationList = new ArrayList<>();
+            //筛选出+权限
+            List<Long> addPermissionIdList = permissionIds.stream().filter(permissionId -> !rolePermissionList.contains(permissionId)).collect(Collectors.toList());
+            //筛选出-权限
+            List<Long> subPermissionIdList = rolePermissionList.stream().filter(permissionId -> !permissionIds.contains(permissionId)).collect(Collectors.toList());
+            //插入+-权限关系
+            relationList.addAll(convert(adminId,1,addPermissionIdList));
+            relationList.addAll(convert(adminId,-1,subPermissionIdList));
+        }
+
         return 0;
     }
 
+    /**
+     * 将+-权限关系转换为对象
+     * @param adminId
+     * @param type
+     * @param permissionIdList
+     * @return
+     */
+    private List<UmsAdminPermissionRelation> convert(Long adminId,Integer type,List<Long> permissionIdList){
+        List<UmsAdminPermissionRelation> relationList = permissionIdList.stream().map(permissionId -> {
+            UmsAdminPermissionRelation relation = new UmsAdminPermissionRelation();
+            relation.setAdminId(adminId);
+            relation.setType(type);
+            relation.setPermissionId(permissionId);
+            return relation;
+        }).collect(Collectors.toList());
+        return relationList;
+    }
     @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
-        // TODO Auto-generated method stub
-        return null;
+        return adminRoleRelationDao.getPermissionList(adminId);
     }
 
     @Override
-    public int updatePassword(UpdateAdminPasswordParam updatePasswordParam) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int updatePassword(UpdateAdminPasswordParam param) {
+        if(StrUtil.isEmpty(param.getUsername())
+                ||StrUtil.isEmpty(param.getOldPassword())
+                ||StrUtil.isEmpty(param.getNewPassword())){
+            return -1;
+        }
+        UmsAdminExample example = new UmsAdminExample();
+        example.createCriteria().andUsernameEqualTo(param.getUsername());
+        List<UmsAdmin> adminList = adminMapper.selectByExample(example);
+        if(CollUtil.isEmpty(adminList)){
+            return -2;
+        }
+        UmsAdmin umsAdmin = adminList.get(0);
+        if(!passwordEncoder.matches(param.getOldPassword(),umsAdmin.getPassword())){
+            return -3;
+        }
+        umsAdmin.setPassword(passwordEncoder.encode(param.getNewPassword()));
+        adminMapper.updateByPrimaryKey(umsAdmin);
+        return 1;
     }
 
 }
