@@ -3,7 +3,24 @@
 *****
 # 电商管理系统后台接口 #
 
+
+
+
 *****
+
+### 项目结构 ###
+``` lua
+    mymall
+    |—— common  
+    |—— component
+    |—— config
+    |—— controller
+    |—— dao
+    |—— mgb
+    |—— pojo
+    |—— service
+    |——validator
+```
 ### 框架技术 ###
   Spring  
   Spring MVC  
@@ -25,3 +42,6 @@
 - 添加商品  
 - 修改商品  
 #### 用户管理 ####
+- admin用户管理
+- 权限管理
+- 角色管理
