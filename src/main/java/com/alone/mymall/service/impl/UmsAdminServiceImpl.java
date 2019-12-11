@@ -5,17 +5,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
 import com.alone.mymall.common.utils.JwtTokenUtil;
 import com.alone.mymall.dao.UmsAdminRoleRelationDao;
 import com.alone.mymall.mgb.mapper.*;
 import com.alone.mymall.mgb.model.*;
-import com.alone.mymall.pojo.UmsAdminLoginParam;
 import com.alone.mymall.pojo.UmsAdminParam;
 import com.alone.mymall.pojo.UpdateAdminPasswordParam;
 import com.alone.mymall.service.UmsAdminService;
@@ -36,7 +33,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import springfox.documentation.builders.RequestHandlerSelectors;
 
 @Service
 public class UmsAdminServiceImpl implements UmsAdminService {
@@ -93,7 +89,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
-    public String longin(String username, String password) {
+    public String login(String username, String password) {
         String toKen=null;
         //密码需要客户端加密后传递
         try{

@@ -32,7 +32,7 @@ public interface UmsAdminService{
      * 登录
      * @return 生成的JWT的token
      */
-    String longin(String username,String password);
+    String login(String username,String password);
 
     /**
      * 刷新token的功能
