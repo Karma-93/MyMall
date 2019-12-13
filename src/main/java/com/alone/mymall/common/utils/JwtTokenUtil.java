@@ -1,18 +1,17 @@
 package com.alone.mymall.common.utils;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JwtToken生成的工具类
@@ -117,6 +116,8 @@ public class JwtTokenUtil{
         String username=getUsernameFromToken(token);
         return username.equals(userDetails.getUsername())&&!isTokenExpired(token);
     }
+
+
 
     /**
      * 判断token是否已经失效

@@ -24,7 +24,7 @@
             where ar.admin_id = #{adminId} and p.id is not null
 
     </select>
-    <select id="getPermissionList" resultMap="com.macro.mall.mapper.UmsPermissionMapper.BaseResultMap">
+    <select id="getPermissionList" resultMap="com.alone.mymall.mgb.mapper.UmsPermissionMapper.BaseResultMap">
         SELECT
             p.*
         FROM

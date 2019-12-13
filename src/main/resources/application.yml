@@ -3,8 +3,13 @@ server:
 spring:
   datasource:
     username: root
-    password: 243698
-    url: jdbc:mysql://localhost:3306/mymall?rewirteBatchedStatements=true&serverTimezone=GMT%2B8
+    password: 12345678
+    url: jdbc:mysql://localhost:3306/mymall
+
+    #url: jdbc:mysql://localhost:3306/mymall?rewirteBatchedStatements=true&serverTimezone=GMT%2B8
+
+
+
 
 jwt:
   tokenHeader: Authorization #JWT存储的请求头

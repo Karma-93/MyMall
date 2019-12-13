@@ -1,16 +1,12 @@
 package com.alone.mymall;
 
+import com.alone.mymall.common.utils.JwtTokenUtil;
 import com.alone.mymall.dao.PmsProductCategoryDao;
 import com.alone.mymall.mgb.mapper.PmsBrandMapper;
 import com.alone.mymall.mgb.model.PmsBrand;
-import com.alone.mymall.mgb.model.PmsBrandExample;
-import com.alone.mymall.mgb.model.PmsProductCategory;
 import com.alone.mymall.pojo.PmsProductCategoryWithChildrenItem;
 import com.alone.mymall.service.PmsBrandService;
 import com.alone.mymall.service.PmsProductCategoryService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.annotations.Mapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +28,17 @@ class MymallApplicationTests {
     @Autowired
     private PmsProductCategoryService pmsProductCategoryService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
+
+    @Test
+    public void JwtTokenUtilsTest(){
+
+        String username=jwtTokenUtil.getUsernameFromToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbG9uZSIsImNyZWF0ZWQiOjE1NzYyMzg0NjM2NDAsImV4cCI6MTU3Njg0MzI2M30.1M7Ln_S4SJc9PtMdM2aY4swQhOSVh3Uibp3gNJK3zNWmQquL3-ipd0njZxJHP7LV89RygXtaTbwHguSDGcEgyg");
+        //String s=jwtTokenUtil;
+        System.out.println(username);
+    }
 
     @Test
     void contextLoads() {
