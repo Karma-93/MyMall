@@ -8,19 +8,17 @@ import com.alone.mymall.pojo.PmsProductQueryParam;
 import com.alone.mymall.pojo.PmsProductResult;
 import com.alone.mymall.service.PmsProductService;
 import com.github.pagehelper.PageHelper;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BEncoderStream;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 /**
  * 商品列表service

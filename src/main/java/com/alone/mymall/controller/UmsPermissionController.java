@@ -2,15 +2,15 @@ package com.alone.mymall.controller;
 
 import com.alone.mymall.common.api.CommonResult;
 import com.alone.mymall.mgb.model.UmsPermission;
+import com.alone.mymall.pojo.UmsPermissionNode;
 import com.alone.mymall.service.UmsPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Api(tags="UmsPermissionController", description="后台用户权限管理")
@@ -28,6 +28,43 @@ public class UmsPermissionController{
 			return CommonResult.success(count);
 		}
 		return CommonResult.failed();
+	}
+	@ApiOperation("修改权限")
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public CommonResult update(@PathVariable Long id, @RequestBody UmsPermission permission) {
+		int count = permissionService.update(id,permission);
+		if(count>0){
+			return CommonResult.success(count);
+		}
+		return CommonResult.failed();
+	}
+
+	@ApiOperation("根据id批量删除权限")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public CommonResult delete(@RequestParam("ids") List<Long> ids) {
+		int count = permissionService.deleteBatch(ids);
+		if(count>0){
+			return CommonResult.success(count);
+		}
+		return CommonResult.failed();
+	}
+
+	@ApiOperation("以层级结构返回所有权限")
+	@RequestMapping(value = "/treeList", method = RequestMethod.GET)
+	@ResponseBody
+	public CommonResult<List<UmsPermissionNode>> treeList() {
+		List<UmsPermissionNode> permissionNodeList = permissionService.treeList();
+		return CommonResult.success(permissionNodeList);
+	}
+
+	@ApiOperation("获取所有权限列表")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@ResponseBody
+	public CommonResult<List<UmsPermission>> list() {
+		List<UmsPermission> permissionList = permissionService.list();
+		return CommonResult.success(permissionList);
 	}
 
 }
