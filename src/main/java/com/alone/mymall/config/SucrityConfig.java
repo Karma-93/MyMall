@@ -79,7 +79,9 @@ public class SucrityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
         httpSecurity.exceptionHandling()
+                //当用户没有访问权限时的处理器
                 .accessDeniedHandler(restfulAccessDeniedHandler)
+                //当未登录或token失效时的返回处理器
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 
