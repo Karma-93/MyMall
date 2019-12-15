@@ -31,7 +31,7 @@
         <!--指定生成的mapper接口路径-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.alone.mymall.mgb.mapper"  targetProject="src\main\java"/>
         <!--生成全部表tableName设为%   每个table标签对应一张表-->
-        <table tableName="ums_member_level">
+        <table tableName="sms_flash_promotion_session">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>
