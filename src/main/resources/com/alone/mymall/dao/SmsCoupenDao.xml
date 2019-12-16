@@ -4,7 +4,7 @@
     <resultMap id="couponItemParam" type="com.alone.mymall.pojo.SmsCouponParam" extends="com.alone.mymall.mgb.mapper.SmsCouponMapper.BaseResultMap">
         <collection property="productRelationList" columnPrefix="cpr_" resultMap="com.alone.mymall.mgb.mapper.SmsCouponProductRelationMapper.BaseResultMap">
         </collection>
-        <collection property="productCategoryRelationList" columnPrefix="cpcr_" resultMap="com.macro.mall.mapper.SmsCouponProductCategoryRelationMapper.BaseResultMap">
+        <collection property="productCategoryRelationList" columnPrefix="cpcr_" resultMap="com.alone.mymall.mgb.mapper.SmsCouponProductCategoryRelationMapper.BaseResultMap">
         </collection>
     </resultMap>
     <select id="getItem">
