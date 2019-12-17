@@ -1,0 +1,46 @@
+package com.alone.mymall.service;
+
+import com.alone.mymall.mgb.model.SmsFlashPromotionSession;
+import com.alone.mymall.pojo.SmsFlashPromotionSessionDetail;
+
+import java.util.List;
+
+/**
+ * 限时购买场次管理Service
+ */
+public interface SmsFlashPromotionSessionService {
+    /**
+     * 添加场次
+     */
+    int create(SmsFlashPromotionSession promotionSession);
+
+    /**
+     * 修改场次
+     */
+    int update(Long id, SmsFlashPromotionSession promotionSession);
+
+    /**
+     * 修改场次启用状态
+     */
+    int updateStatus(Long id, Integer status);
+
+    /**
+     * 删除场次
+     */
+    int delete(Long id);
+
+    /**
+     * 获取详情
+     */
+    SmsFlashPromotionSession getItem(Long id);
+
+    /**
+     * 根据启用状态获取场次列表
+     */
+    List<SmsFlashPromotionSession> list();
+
+    /**
+     * 获取全部可选场次及其数量
+     */
+    List<SmsFlashPromotionSessionDetail> selectList(Long flashPromotionId);
+}

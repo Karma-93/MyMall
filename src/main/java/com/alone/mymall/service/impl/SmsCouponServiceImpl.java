@@ -6,13 +6,13 @@ import com.alone.mymall.dao.SmsCouponProductRelationDao;
 import com.alone.mymall.mgb.mapper.SmsCouponMapper;
 import com.alone.mymall.mgb.mapper.SmsCouponProductCategoryRelationMapper;
 import com.alone.mymall.mgb.mapper.SmsCouponProductRelationMapper;
-import com.alone.mymall.mgb.model.SmsCoupon;
-import com.alone.mymall.mgb.model.SmsCouponProductCategoryRelation;
-import com.alone.mymall.mgb.model.SmsCouponProductRelation;
+import com.alone.mymall.mgb.model.*;
 import com.alone.mymall.pojo.SmsCouponParam;
 import com.alone.mymall.service.SmsCouponService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -27,13 +27,10 @@ public class SmsCouponServiceImpl implements SmsCouponService {
     @Autowired
     private SmsCouponProductRelationMapper couponProductRelationMapper;
     @Autowired
-
     private SmsCouponProductCategoryRelationMapper couponProductCategoryRelationMapper;
     @Autowired
-
     private SmsCouponProductRelationDao couponProductRelationDao;
     @Autowired
-
     private SmsCouponProductCategoryRelationDao couponProductCategoryRelationDao;
 
     @Override
@@ -64,23 +61,64 @@ public class SmsCouponServiceImpl implements SmsCouponService {
     public int delete(Long id)
     {
         int count=couponMapper.deleteByPrimaryKey(id);
-        couponProductRelationMapper.deleteByPrimaryKey(id);
-        couponProductCategoryRelationMapper.deleteByPrimaryKey(id);
+        //删除商品关联
+        deleteProductRelation(id);
+        //删除商品分类关联
+        deleteProductCategoryRelation(id);
         return 0;
+    }
+
+    private void deleteProductRelation(Long id) {
+        SmsCouponProductRelationExample couponProductRelationExample=new SmsCouponProductRelationExample();
+        couponProductRelationExample.createCriteria().andCouponIdEqualTo(id);
+        couponProductRelationMapper.deleteByExample(couponProductRelationExample);
+    }
+
+    private void deleteProductCategoryRelation(Long id) {
+        SmsCouponProductCategoryRelationExample couponProductCategoryRelationExample=new SmsCouponProductCategoryRelationExample();
+        couponProductCategoryRelationExample.createCriteria().andCouponIdEqualTo(id);
+        couponProductCategoryRelationMapper.deleteByExample(couponProductCategoryRelationExample);
     }
 
     @Override
     public int update(Long id, SmsCouponParam couponParam) {
-        return 0;
+        couponParam.setId(id);
+        int count =couponMapper.updateByPrimaryKey(couponParam);
+        //删除后插入优惠券和商品关系表
+        if(couponParam.getUseType().equals(2)){
+            for(SmsCouponProductRelation productRelation:couponParam.getProductRelationList()){
+                productRelation.setCouponId(couponParam.getId());
+            }
+            deleteProductRelation(id);
+            couponProductRelationDao.insertList(couponParam.getProductRelationList());
+        }
+        //删除后插入优惠券和商品分类关系表
+        if(couponParam.getUseType().equals(1)){
+            for (SmsCouponProductCategoryRelation couponProductCategoryRelation : couponParam.getProductCategoryRelationList()) {
+                couponProductCategoryRelation.setCouponId(couponParam.getId());
+            }
+            deleteProductCategoryRelation(id);
+            couponProductCategoryRelationDao.insertList(couponParam.getProductCategoryRelationList());
+        }
+        return count;
     }
 
     @Override
     public List<SmsCoupon> list(String name, Integer type, Integer pageSize, Integer pageNum) {
-        return null;
+        SmsCouponExample example = new SmsCouponExample();
+        SmsCouponExample.Criteria criteria = example.createCriteria();
+        if(!StringUtils.isEmpty(name)){
+            criteria.andNameLike("%"+name+"%");
+        }
+        if(type!=null){
+            criteria.andTypeEqualTo(type);
+        }
+        PageHelper.startPage(pageNum,pageSize);
+        return couponMapper.selectByExample(example);
     }
 
     @Override
     public SmsCouponParam getItem(Long id) {
-        return null;
+        return couponDao.getItem(id);
     }
 }
