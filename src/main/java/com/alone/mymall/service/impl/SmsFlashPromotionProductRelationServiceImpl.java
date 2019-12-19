@@ -1,5 +1,6 @@
 package com.alone.mymall.service.impl;
 
+import com.alone.mymall.dao.SmsFlashPromotionProductRelationDao;
 import com.alone.mymall.mgb.mapper.SmsFlashPromotionProductRelationMapper;
 import com.alone.mymall.mgb.model.SmsFlashPromotionProductRelation;
 import com.alone.mymall.mgb.model.SmsFlashPromotionProductRelationExample;
@@ -15,12 +16,13 @@ import java.util.List;
 public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashPromotionProductRelationService {
 
     @Autowired
-    private SmsFlashPromotionProductRelationMapper flashPromotionProductRelationMapper;
-
+    private SmsFlashPromotionProductRelationMapper relationMapper;
+    @Autowired
+    private SmsFlashPromotionProductRelationDao relationDao;
     @Override
     public int create(List<SmsFlashPromotionProductRelation> relationList) {
-        for (SmsFlashPromotionProductRelation relation:relationList){
-            flashPromotionProductRelationMapper.insert(relation);
+        for (SmsFlashPromotionProductRelation relation : relationList) {
+            relationMapper.insert(relation);
         }
         return relationList.size();
     }
@@ -28,23 +30,23 @@ public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashProm
     @Override
     public int update(Long id, SmsFlashPromotionProductRelation relation) {
         relation.setId(id);
-        return flashPromotionProductRelationMapper.updateByPrimaryKey(relation);
+        return relationMapper.updateByPrimaryKey(relation);
     }
 
     @Override
     public int delete(Long id) {
-        return flashPromotionProductRelationMapper.deleteByPrimaryKey(id);
+        return relationMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public SmsFlashPromotionProductRelation getItem(Long id) {
-        return flashPromotionProductRelationMapper.selectByPrimaryKey(id);
+        return relationMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public List<SmsFlashPromotionProduct> list(Long flashPromotionId, Long flashPromotionSessionId, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum,pageSize);
-        return flashPromotionProductRelationMapper.getList(flashPromotionId,flashPromotionSessionId);
+        return relationDao.getList(flashPromotionId,flashPromotionSessionId);
     }
 
     @Override
@@ -53,6 +55,6 @@ public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashProm
         example.createCriteria()
                 .andFlashPromotionIdEqualTo(flashPromotionId)
                 .andFlashPromotionSessionIdEqualTo(flashPromotionSessionId);
-        return flashPromotionProductRelationMapper.countByExample(example);
+        return relationMapper.countByExample(example);
     }
 }
