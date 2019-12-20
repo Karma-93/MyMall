@@ -5,6 +5,7 @@ import com.alone.mymall.mgb.model.OmsOrder;
 import com.alone.mymall.pojo.OmsOrderDeliveryParam;
 import com.alone.mymall.pojo.OmsOrderDetail;
 import com.alone.mymall.pojo.OmsOrderQueryParam;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * 订单自定义查询Dao
  */
+@Mapper
 public interface OmsOrderDao {
     /**
      * 条件查询订单

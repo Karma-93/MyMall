@@ -4,6 +4,7 @@ package com.alone.mymall.dao;
 import com.alone.mymall.mgb.model.OmsOrderReturnApply;
 import com.alone.mymall.pojo.OmsOrderReturnApplyResult;
 import com.alone.mymall.pojo.OmsReturnApplyQueryParam;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * 订单退货申请自定义Dao
  */
+@Mapper
 public interface OmsOrderReturnApplyDao {
     /**
      * 查询申请列表
