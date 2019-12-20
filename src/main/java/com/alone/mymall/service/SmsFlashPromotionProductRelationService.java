@@ -2,6 +2,8 @@ package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.SmsFlashPromotionProductRelation;
 import com.alone.mymall.pojo.SmsFlashPromotionProduct;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

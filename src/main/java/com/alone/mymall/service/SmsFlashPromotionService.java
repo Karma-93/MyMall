@@ -1,6 +1,7 @@
 package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.SmsFlashPromotion;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

@@ -3,6 +3,8 @@ package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.SmsCoupon;
 import com.alone.mymall.pojo.SmsCouponParam;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

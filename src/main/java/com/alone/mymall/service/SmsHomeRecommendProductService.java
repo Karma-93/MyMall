@@ -2,6 +2,7 @@ package com.alone.mymall.service;
 
 
 import com.alone.mymall.mgb.model.SmsHomeRecommendProduct;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

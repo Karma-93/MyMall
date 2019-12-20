@@ -2,6 +2,7 @@ package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.SmsFlashPromotionSession;
 import com.alone.mymall.pojo.SmsFlashPromotionSessionDetail;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

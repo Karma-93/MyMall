@@ -1,6 +1,7 @@
 package com.alone.mymall.service;
 
 import com.alone.mymall.mgb.model.SmsHomeNewProduct;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

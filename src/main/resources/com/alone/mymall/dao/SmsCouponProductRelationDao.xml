@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.alone.mymall.dao.SmsCouponProductCategoryRelationDao">
+<mapper namespace="com.alone.mymall.dao.SmsCouponProductRelationDao">
     <insert id="insertList">
         INSERT INTO sms_coupon_product_relation (coupon_id,product_id,product_name,product_sn)
         VALUES
