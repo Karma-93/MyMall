@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * 优惠券和产品关系自定义Dao
- * Created by macro on 2018/8/28.
  */
 @Mapper
 public interface SmsCouponProductRelationDao {
