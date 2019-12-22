@@ -5,6 +5,9 @@ import com.alone.mymall.mgb.model.PmsSkuStock;
 
 import java.util.List;
 
+/**
+ * SKU库存管理Service
+ */
 public interface PmsSkuStockService {
     /**
      * 根据产品id和skuCoke模糊搜索
