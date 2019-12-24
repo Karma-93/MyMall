@@ -11,7 +11,7 @@
 ### 项目结构 ###
 ``` lua
     mymall
-    |—— common  
+    |—— common
     |—— component
     |—— config
     |—— controller
@@ -66,4 +66,4 @@
 - 退货申请管理
 - 订单退货原因管理
 - 订单管理
-- 订单设置管理  
+- 订单设置管理
