@@ -22,7 +22,7 @@
     |——validator
 ```
 > ### 框架技术 ###
->  Spring
+> | Spring | **** |
 
   | Spring MVC |
   | MyBatis |
