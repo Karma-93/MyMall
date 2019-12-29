@@ -22,18 +22,20 @@
     |——validator
 ```
 > ### 框架技术 ###
->  Spring | **** 
-
-   Spring MVC |
-   MyBatis |
-   Spring Boot框架 |
-   MySql数据库 |
-   PageHelper分页插件 |
-   Lombook |
-   Swagger-UI生成在线API |
-   SpringSecurity |
-   JWT(JSON WEB TOKEN) |
-   对象存储OSS |
+   技术 | 说明
+   -|-
+   Spring | 容器框架  
+   Spring MVC | MVC框架  
+   MyBatis | ORM框架  
+   Spring Boot框架 | SSM整合
+   MySql数据库 | 数据库
+   PageHelper分页插件 | 分页插件
+   Lombook | POJO类的注解工具
+   Swagger-UI生成在线API | 文档产生工具
+   SpringSecurity | 认证和授权框架
+   JWT(JSON WEB TOKEN) | 登录支持
+   对象存储OSS | 对象存储
+ 
   
   
 ### **后台功能** ###
