@@ -2,11 +2,12 @@ package com.alone.mymall.pojo;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+
 
 import com.alone.mymall.validator.FlagValidator;
 
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.List;
 
