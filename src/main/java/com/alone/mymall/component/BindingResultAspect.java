@@ -2,6 +2,7 @@ package com.alone.mymall.component;
 
 import com.alone.mymall.common.api.CommonResult;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
@@ -12,15 +13,14 @@ import org.springframework.validation.FieldError;
 
 @Aspect
 @Component
-@Order(2)
 /**
  * HibernateValidator错误结果处理切面
  */
 public class BindingResultAspect{
-    @Pointcut("execution(public * com.alone.mymall.controller.*.*(..))")
+    @Pointcut("execution(* com.alone.mymall.controller.*.*(..))")
     public void BindingResultAspect(){
-
     }
+    @Around("BindingResultAspect()")
     public Object doAround(ProceedingJoinPoint joinPoint)throws Throwable {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class UmsAdminController {
     @ApiOperation(value = "用户注册")
     @ResponseBody
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public CommonResult<UmsAdmin> register(@RequestBody UmsAdminParam adminParam, BindingResult bindingResult){
+    public CommonResult<UmsAdmin> register(@RequestBody @Validated UmsAdminParam adminParam, BindingResult bindingResult){
         UmsAdmin umsAdmin=adminService.register(adminParam);
         if(umsAdmin==null){
             return CommonResult.failed();
@@ -49,7 +50,7 @@ public class UmsAdminController {
     @ApiOperation(value = "登录并返回token")
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public CommonResult login(@RequestBody UmsAdminLoginParam adminLoginParam,BindingResult bindingResult){
+    public CommonResult login(@RequestBody @Validated UmsAdminLoginParam adminLoginParam,BindingResult bindingResult){
         String token=adminService.login(adminLoginParam.getUserName(),adminLoginParam.getPassWord());
         if (token==null){
             return CommonResult.failed("用户名或密码错误");

@@ -10,6 +10,7 @@ import com.alone.mymall.service.impl.PmsProductCategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
@@ -38,7 +39,7 @@ public class PmsProductCategoryController {
     @ApiOperation("添加商品分类")
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public CommonResult create(@RequestBody PmsProductCategoryParam pmsProductCategoryParam){
+    public CommonResult create(@RequestBody @Validated PmsProductCategoryParam pmsProductCategoryParam, BindingResult bindingResult){
         int count=productCategoryService.createProductCategory(pmsProductCategoryParam);
         if(count==1){
             return CommonResult.success(count);
@@ -56,7 +57,7 @@ public class PmsProductCategoryController {
     @ApiOperation("更新商品分类信息")
     @ResponseBody
     @RequestMapping(value ="/update",method = RequestMethod.POST)
-    public CommonResult update(@RequestBody PmsProductCategoryParam pmsProductCategoryParam,Long id){
+    public CommonResult update(@RequestBody @Validated PmsProductCategoryParam pmsProductCategoryParam,Long id,BindingResult bindingResult){
         int count=productCategoryService.updateProductCategory(id,pmsProductCategoryParam);
         if (count == 1) {
             return CommonResult.success(count);

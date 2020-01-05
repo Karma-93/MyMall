@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class PmsProductAttributeController {
     @ApiOperation("添加商品属性")
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public CommonResult create(@RequestParam PmsProductAttributeParam productAttributeParam,BindingResult bindingResult){
+    public CommonResult create(@RequestParam @Validated PmsProductAttributeParam productAttributeParam,BindingResult bindingResult){
         int count= productAttributeService.create(productAttributeParam);
         if(count==1){
             return CommonResult.success(count);
@@ -51,7 +52,7 @@ public class PmsProductAttributeController {
     @ApiOperation("修改商品属性信息")
     @ResponseBody
     @RequestMapping(value = "/update/{id}",method = RequestMethod.POST)
-    public CommonResult update(@PathVariable Long id, @RequestParam PmsProductAttributeParam productAttributeParam, BindingResult bindingResult){
+    public CommonResult update(@PathVariable Long id, @RequestParam @Validated PmsProductAttributeParam productAttributeParam, BindingResult bindingResult){
         int count=productAttributeService.update(id,productAttributeParam);
         if(count==1){
             return CommonResult.success(count);

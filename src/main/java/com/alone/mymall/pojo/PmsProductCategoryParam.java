@@ -3,8 +3,8 @@ package com.alone.mymall.pojo;
 import com.alone.mymall.validator.FlagValidator;
 import lombok.Data;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
