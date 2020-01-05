@@ -1,7 +1,6 @@
 package com.alone.mymall.component;
 
 import com.alone.mymall.common.api.CommonResult;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -9,6 +8,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
 
 @Aspect
 @Component
