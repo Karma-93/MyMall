@@ -5,11 +5,9 @@ spring:
     username: root
     password: 243698
     #url: jdbc:mysql://localhost:3306/mymall
-
     url: jdbc:mysql://localhost:3306/mymall?rewirteBatchedStatements=true&serverTimezone=GMT%2B8
-
-
-
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
@@ -21,17 +19,4 @@ mybatis:
   mapper-locations:
     -classpath:mapper/*.xml
     -classpath*:com/**/mapper/*/xml
-
-aliyun:
-  oss:
-    endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
-    accessKeyId: test # 访问身份验证中用到用户标识
-    accessKeySecret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: alone-oss # oss的存储空间
-    policy:
-      expire: 300 # 签名有效期(S)
-    maxSize: 10 # 上传文件大小(M)
-    callback: http://39.98.190.128:8080/aliyun/oss/callback # 文件上传成功后的回调地址
-    dir:
-      prefix: mall/images/ # 上传文件夹路径前缀
 

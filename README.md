@@ -35,7 +35,9 @@
    Swagger-UI生成在线API | 文档产生工具
    SpringSecurity | 认证和授权框架
    JWT(JSON WEB TOKEN) | 登录支持
-   对象存储OSS | 对象存储
+   Hibernator-Validator | 验证框架
+   MyBatisGenerator | DAO层的代码生成
+   Druid | 数据库连接池
  
   
   
