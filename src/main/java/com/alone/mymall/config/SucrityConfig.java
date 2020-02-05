@@ -103,7 +103,8 @@ public class SucrityConfig extends WebSecurityConfigurerAdapter {
             UmsAdmin admin = adminService.getAdminByUsername(username);
             if (admin != null) {
                 List<UmsPermission> permissionList = adminService.getPermissionList(admin.getId());
-                return new AdminUserDetails(admin,permissionList);
+
+                return new AdminUserDetails(admin,permissionList);//传入用户信息和用户权限
             }
             throw new UsernameNotFoundException("用户名或密码错误");
         };
