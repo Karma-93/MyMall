@@ -33,7 +33,7 @@ import java.util.List;
 @Configurable
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SucrityConfig extends WebSecurityConfigurerAdapter {
+public class SeucrityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UmsAdminService adminService;
     @Autowired
